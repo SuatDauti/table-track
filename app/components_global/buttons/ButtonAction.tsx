@@ -13,7 +13,10 @@ export default function ButtonAction({
   return (
     <>
       <button
-        className={twMerge(" text-white border-md rounded-md", className)}
+        className={twMerge(
+          " text-white border-2 w-fit mt-5 ml-5 hover:text-redProd border-md rounded-md",
+          className
+        )}
         {...props}
       >
         {children}

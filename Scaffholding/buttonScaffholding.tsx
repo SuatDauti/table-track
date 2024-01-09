@@ -1,6 +1,8 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
+//Change interface name when creating other buttons
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
@@ -12,7 +14,7 @@ export default function ButtonScaffholding({
 }: ButtonProps) {
   return (
     <>
-      <button {...props} className={twMerge("text-white", className)}>
+      <button className={twMerge("", className)} {...props}>
         {children}
       </button>
     </>
