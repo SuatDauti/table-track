@@ -1,20 +1,20 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface ButtonAction extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonDisabeld extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 
-export default function ButtonAction({
+export default function ButtonDisabeld({
   children,
   className,
   ...props
-}: ButtonAction) {
+}: ButtonDisabeld) {
   return (
     <>
       <button
         className={twMerge(
-          "text-white py-2 px-4 bg-blueProd border-highlight border-2 w-fit rounded-md hover:bg-highlight ease-in-out duration-100 shadow-md shadow-[#000000]",
+          "text-grayProd py-2 px-4 bg-white border-highlight border-2 w-fit rounded-md hover:bg-highlight ease-in-out duration-100 shadow-md shadow-[#000000]",
           className
         )}
         {...props}
