@@ -25,6 +25,7 @@ const config: Config = {
       grayProd: "#909090",
       purplePassive: "#7277ED",
       purpleActive: "#FF00D6",
+      darkHiglight: "#2E3288",
     },
   },
   plugins: [],
