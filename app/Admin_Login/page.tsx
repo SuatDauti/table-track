@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ButtonAction from "../components_global/buttons/ButtonAction";
 import ButtonAccept from "../components_global/buttons/ButtonAccept";
+import ButtonNeutral from "../components_global/buttons/ButtonNeutral";
 
 export default function AdminLiginPage() {
   return (
@@ -25,9 +26,14 @@ export default function AdminLiginPage() {
             className="px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight"
             required
           ></input>
-          <ButtonAccept className="w-full" type="submit">
-            Submit
-          </ButtonAccept>
+          <div className="flex gap-2">
+            <ButtonNeutral className="w-full" type="submit">
+              Forgot
+            </ButtonNeutral>
+            <ButtonAccept className="w-full" type="submit">
+              Submit
+            </ButtonAccept>
+          </div>
         </form>
       </div>
     </div>
