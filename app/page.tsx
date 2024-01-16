@@ -58,7 +58,7 @@ export default function Home() {
         <form className="grid grid-cols-3 grid-rows-5 gap-4 max-w-xs ">
           <input
             type="text"
-            value={Pin}
+            defaultValue={Pin}
             placeholder="PIN"
             className="col-span-3 text-center focus:outline-none focus:ring-2 focus:ring-highlight"
           ></input>
