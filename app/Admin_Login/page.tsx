@@ -6,7 +6,7 @@ import ButtonAccept from "../components_global/buttons/ButtonAccept";
 import ButtonNeutral from "../components_global/buttons/ButtonNeutral";
 import { useState } from "react";
 
-export default function AdminLiginPage() {
+export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
