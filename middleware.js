@@ -1,3 +1,3 @@
 export { default } from "next-auth/middleware";
 
-export const config = { matcher: ["/adminPanel"] };
+export const config = { matcher: ["/adminPanel/:path*"] };
