@@ -5,36 +5,37 @@ import ButtonAction from "../components_global/buttons/ButtonAction";
 import ButtonAccept from "../components_global/buttons/ButtonAccept";
 import ButtonNeutral from "../components_global/buttons/ButtonNeutral";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("api/admin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
+      const res: any = await signIn("credentials", {
+        username,
+        password,
+        redirect: false,
       });
 
-      if (res.ok) {
-        const form = e.target;
-        form.reset();
-      } else {
-        console.log("user registration failed.");
+      if (res.error) {
+        setError("Invalid Credentials");
+        return;
       }
+
+      router.replace("adminPanel");
     } catch (error) {
-      console.log("Error during registration: ", error);
+      console.log(error);
     }
   };
+
   return (
     <div>
       {/* Back Button */}
@@ -44,7 +45,16 @@ export default function AdminLoginPage() {
         </Link>
       </div>
       <div className="flex h-screen justify-center items-center">
-        <form onSubmit={handleSubmit} className="flex h-fit flex-col gap-4">
+        <form
+          id="LoginForm"
+          onSubmit={handleSubmit}
+          className="flex h-fit flex-col gap-4"
+        >
+          {error && (
+            <h1 className="bg-redProd text-white w-fill rounded-md px-1 py-2 text-center">
+              {error}
+            </h1>
+          )}
           <input
             onChange={(e) => setUsername(e.target.value)}
             type="text"

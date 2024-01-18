@@ -48,7 +48,7 @@ export default function Home() {
     <div>
       {/* Login Button */}
       <div className="absolute right-10 top-10">
-        <Link href={"Admin_Login"} passHref>
+        <Link href={"adminLogin"} passHref>
           <ButtonAction>Admin Login</ButtonAction>
         </Link>
       </div>
