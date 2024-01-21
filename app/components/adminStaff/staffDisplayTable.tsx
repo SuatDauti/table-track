@@ -1,5 +1,6 @@
 import ButtonAccept from "@/app/components_global/buttons/ButtonAccept";
 import ButtonNeutral from "@/app/components_global/buttons/ButtonNeutral";
+import Link from "next/link";
 
 export default function StaffDisplayTable() {
   return (
@@ -10,9 +11,11 @@ export default function StaffDisplayTable() {
           <th>Employee Name</th>
           <th>Currently Working</th>
           <th>
-            <ButtonAccept className="border-none rounded-none shadow-none">
-              Add Employee
-            </ButtonAccept>
+            <Link href={"/adminPanel/staffAdmin/1"} passHref>
+              <ButtonAccept className="border-none rounded-none shadow-none">
+                Add Employee
+              </ButtonAccept>
+            </Link>
           </th>
         </tr>
         <tr className="border-b border-blackBody bg-white text-blackBody">
