@@ -5,7 +5,6 @@ export default function WarningText() {
         <h1 className="text-white text-2xl">
           Changes you make won’t take place until you press add
         </h1>
-        <p className="text-white">Position</p>
       </div>
     </>
   );
