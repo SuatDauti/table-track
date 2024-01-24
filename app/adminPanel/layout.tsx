@@ -16,13 +16,11 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="flex">
-          <AdminNavbar />
-          {children}
-        </div>
-      </body>
-    </html>
+    <body className={inter.className}>
+      <div className="flex">
+        <AdminNavbar />
+        {children}
+      </div>
+    </body>
   );
 }

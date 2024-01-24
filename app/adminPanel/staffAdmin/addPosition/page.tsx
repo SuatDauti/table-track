@@ -7,10 +7,38 @@ import ButtonNeutral from "@/app/components_global/buttons/ButtonNeutral";
 import ButtonReject from "@/app/components_global/buttons/ButtonReject";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AddPosition() {
   const [Position, SetPosition] = useState("");
 
+  const router = useRouter();
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("/api/position", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          position: Position,
+        }),
+      });
+
+      if (res.ok) {
+        const form = e.target;
+        form.reset();
+        router.push("/");
+      } else {
+        console.log("User registration failed.");
+      }
+    } catch (error) {
+      console.log("Error during registration: ", error);
+    }
+  };
   return (
     <>
       <div className="flex flex-col items-center w-full gap-12 max-h-screen overflow-y-scroll">
@@ -32,7 +60,7 @@ export default function AddPosition() {
 
         {/* Form */}
         <div className="w-full">
-          <form className="flex justify-around">
+          <form className="flex justify-around" onSubmit={handleSubmit}>
             <input
               onChange={(e) => SetPosition(e.target.value)}
               type="text"
