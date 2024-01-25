@@ -7,6 +7,7 @@ import ButtonAccept from "@/app/components_global/buttons/ButtonAccept";
 import ButtonNeutral from "@/app/components_global/buttons/ButtonNeutral";
 import WarningText from "@/app/components/adminStaff/addPosition/warningText";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function AddEmployee() {
   const [Name, SetName] = useState("");
@@ -14,13 +15,65 @@ export default function AddEmployee() {
   const [Pin, SetPin] = useState("");
   const [IsEmployeed, SetIsEmployeed] = useState(true);
   const pathname = usePathname().split("/").pop();
-
-  // Get From Route to send to database
-  const [Position, setPosition] = useState("");
+  const router = useRouter();
 
   function changeIsEmployeed() {
     SetIsEmployeed(!IsEmployeed);
   }
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      if (
+        !Name ||
+        !LastName ||
+        !Pin ||
+        typeof IsEmployeed === "undefined" ||
+        !pathname
+      ) {
+        console.error("One or more required fields are missing.");
+        return;
+      }
+
+      console.log(
+        "Request Payload:",
+        JSON.stringify({
+          name: Name,
+          LastName: LastName,
+          Pin: Pin,
+          IsEmployeed: IsEmployeed,
+          position: pathname,
+        })
+      );
+
+      const res = await fetch("/api/staff", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: Name,
+          LastName: LastName,
+          Pin: Pin,
+          IsEmployeed: IsEmployeed,
+          position: pathname,
+        }),
+      });
+
+      console.log("Response status:", res.status);
+
+      if (res.ok) {
+        const form = e.target;
+        form.reset();
+        router.push("/adminPanel/staffAdmin");
+      } else {
+        console.log("User registration failed.");
+      }
+    } catch (error) {
+      console.log("Error during registration: ", error);
+    }
+  };
 
   return (
     <>
@@ -42,7 +95,7 @@ export default function AddEmployee() {
 
         {/* Form */}
         <div className="w-full flex justify-around">
-          <form className="flex flex-col gap-4 w-[30%]">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-[30%]">
             <div className="flex justify-between items-center">
               <p className="text-white">Name:</p>
               <input
@@ -79,18 +132,17 @@ export default function AddEmployee() {
                 className=" scale-150"
               ></input>
             </div>
-          </form>
-
-          {/* Buttons */}
-          <div className="flex flex-col gap-4">
-            <ButtonAccept className="w-full" type="submit">
-              Add
-            </ButtonAccept>
-            <div className="flex gap-8">
-              <ButtonNeutral className="w-full">Cancel</ButtonNeutral>
-              <ButtonReject className="w-full">Delete</ButtonReject>
+            {/* Buttons */}
+            <div className="flex flex-col gap-4">
+              <ButtonAccept className="w-full" type="submit">
+                Add
+              </ButtonAccept>
+              <div className="flex gap-8">
+                <ButtonNeutral className="w-full">Cancel</ButtonNeutral>
+                <ButtonReject className="w-full">Delete</ButtonReject>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </>
