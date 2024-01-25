@@ -14,7 +14,7 @@ const employeeSchema = new Schema(
       type: String,
       required: true,
     },
-    IsEmployed: {
+    IsEmployeed: {
       type: Boolean,
       required: true,
     },
