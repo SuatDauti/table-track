@@ -24,3 +24,9 @@ export async function POST(req) {
     );
   }
 }
+
+export async function GET() {
+  await connectMongoDB();
+  const positions = await Position.find();
+  return NextResponse.json({ positions });
+}

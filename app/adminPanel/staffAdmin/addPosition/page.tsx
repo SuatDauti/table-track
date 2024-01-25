@@ -31,7 +31,7 @@ export default function AddPosition() {
       if (res.ok) {
         const form = e.target;
         form.reset();
-        router.push("/");
+        router.push("/adminPanel/staffAdmin");
       } else {
         console.log("User registration failed.");
       }
@@ -80,7 +80,7 @@ export default function AddPosition() {
         </div>
 
         {/* Show table */}
-        <DisplayStaffPosition />
+        {/* <DisplayStaffPosition /> */}
       </div>
     </>
   );

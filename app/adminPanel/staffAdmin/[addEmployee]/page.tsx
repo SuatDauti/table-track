@@ -6,12 +6,14 @@ import { useState } from "react";
 import ButtonAccept from "@/app/components_global/buttons/ButtonAccept";
 import ButtonNeutral from "@/app/components_global/buttons/ButtonNeutral";
 import WarningText from "@/app/components/adminStaff/addPosition/warningText";
+import { usePathname } from "next/navigation";
 
 export default function AddEmployee() {
   const [Name, SetName] = useState("");
   const [LastName, SetLastName] = useState("");
   const [Pin, SetPin] = useState("");
   const [IsEmployeed, SetIsEmployeed] = useState(true);
+  const pathname = usePathname().split("/").pop();
 
   // Get From Route to send to database
   const [Position, setPosition] = useState("");
@@ -35,7 +37,7 @@ export default function AddEmployee() {
         </Link>
 
         {/* Title */}
-        <h1 className="text-white text-5xl mt-12">Staff (Manager*)</h1>
+        <h1 className="text-white text-5xl mt-12">Staff ({pathname})</h1>
         <WarningText />
 
         {/* Form */}
