@@ -36,17 +36,6 @@ export default function AddEmployee() {
         return;
       }
 
-      console.log(
-        "Request Payload:",
-        JSON.stringify({
-          name: Name,
-          LastName: LastName,
-          Pin: Pin,
-          IsEmployeed: IsEmployeed,
-          position: pathname,
-        })
-      );
-
       const res = await fetch("/api/staff", {
         method: "POST",
         headers: {
