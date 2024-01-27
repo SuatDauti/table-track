@@ -23,8 +23,6 @@ export default function AddProductForm() {
   const [Topping7, SetTopping7] = useState("");
   const [Topping8, SetTopping8] = useState("");
 
-  // const [ToppingsArray, SetToppingsArray] = useState<string[]>([]);
-
   let pathname = usePathname().split("/").pop();
   pathname = pathname?.replace("%20", " ");
 
@@ -41,41 +39,6 @@ export default function AddProductForm() {
       Topping7,
       Topping8,
     ].filter((topping) => topping !== "");
-
-    // if (Topping1 !== "") {
-    //   newToppingsArray.push(Topping1);
-    //   SetTopping1("");
-    // }
-    // if (Topping2 !== "") {
-    //   newToppingsArray.push(Topping2);
-    //   SetTopping2("");
-    // }
-    // if (Topping3 !== "") {
-    //   newToppingsArray.push(Topping3);
-    //   SetTopping3("");
-    // }
-    // if (Topping4 !== "") {
-    //   newToppingsArray.push(Topping4);
-    //   SetTopping4("");
-    // }
-    // if (Topping5 !== "") {
-    //   newToppingsArray.push(Topping5);
-    //   SetTopping5("");
-    // }
-    // if (Topping6 !== "") {
-    //   newToppingsArray.push(Topping6);
-    //   SetTopping6("");
-    // }
-    // if (Topping7 !== "") {
-    //   newToppingsArray.push(Topping7);
-    //   SetTopping7("");
-    // }
-    // if (Topping8 !== "") {
-    //   newToppingsArray.push(Topping8);
-    //   SetTopping8("");
-    // }
-
-    // SetToppingsArray(newToppingsArray);
 
     try {
       if (!ProductName || !ProductPrice || !IsFor || !pathname) {
