@@ -43,14 +43,14 @@ export default async function StaffDisplayTable() {
       {positions.map((t: any) => (
         <table
           key={t._id}
-          className="text-white w-full text-right self-center  border-spacing-y-8"
+          className="text-white w-full text-center self-center  border-spacing-y-8 table-fixed"
         >
           <tbody>
             <tr className="border-b border-white">
               <th>Staff Position ({t.position})</th>
               <th>Employee Name</th>
               <th>Currently Working</th>
-              <th>
+              <th className="text-end">
                 <Link href={`/adminPanel/staffAdmin/${t.position}`} passHref>
                   <ButtonAccept className="border-none rounded-none shadow-none">
                     Add Employee

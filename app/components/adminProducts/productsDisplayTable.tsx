@@ -40,14 +40,14 @@ export default async function ProductsDisplayTable() {
   return (
     <>
       {category.map((t: any) => (
-        <table className="text-white w-full text-right self-center  border-spacing-y-8 ">
+        <table className="text-white w-full text-center self-center  border-spacing-y-8 table-fixed">
           <thead>
             <tr className="border-b border-white">
               <th>{t.category}</th>
               <th>Product Name</th>
               <th>Product Price</th>
               <th>In Stock</th>
-              <th>
+              <th className="text-end">
                 <Link href={`/adminPanel/productsAdmin/${t.category}`} passHref>
                   <ButtonAccept className="border-none rounded-none shadow-none">
                     Add Product
@@ -66,7 +66,7 @@ export default async function ProductsDisplayTable() {
                   <td>{p.price} $</td>
                   <td>{p.inStorage}</td>
                   <td className=" text-end">
-                    <Link href={"#"}>
+                    <Link href={`/adminPanel/productsAdmin/${p._id}`}>
                       <ButtonNeutral className="border-none rounded-none">
                         Edit
                       </ButtonNeutral>
