@@ -40,7 +40,10 @@ export default async function ProductsDisplayTable() {
   return (
     <>
       {category.map((t: any) => (
-        <table className="text-white w-full text-center self-center  border-spacing-y-8 table-fixed">
+        <table
+          key={t._id}
+          className="text-white w-full text-center self-center  border-spacing-y-8 table-fixed"
+        >
           <thead>
             <tr className="border-b border-white">
               <th>{t.category}</th>
@@ -59,7 +62,7 @@ export default async function ProductsDisplayTable() {
           {product
             .filter((p: any) => p.category === t.category)
             .map((p: any) => (
-              <tbody>
+              <tbody key={p._id}>
                 <tr className="border-b border-blackBody bg-white text-blackBody">
                   <td>{p.sentTo}</td>
                   <td>{p.name}</td>
