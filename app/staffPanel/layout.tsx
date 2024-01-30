@@ -1,9 +1,14 @@
-import { AuthProvider } from "../Providers";
+import StaffNavbar from "../components/staffPanel/staffNavbar";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <div>
+      <StaffNavbar />
+      {children}
+    </div>
+  );
 }

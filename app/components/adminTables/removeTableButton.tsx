@@ -1,10 +1,8 @@
 "use client";
 
 import ButtonReject from "@/app/components_global/buttons/ButtonReject";
-import { useRouter } from "next/navigation";
 
 export default function RemoveTableButton() {
-  const router = useRouter();
   const removeTable = async () => {
     const confirmed = confirm("Are you sure?");
 

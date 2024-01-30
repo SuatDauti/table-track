@@ -1,24 +1,20 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
-import ButtonReject from "@/app/components_global/buttons/ButtonReject";
+import StaffDisplayTables from "../components/staffTables/staffDisplayTables";
+import { useSession } from "next-auth/react";
 export default function StaffPanel() {
   const { data: session } = useSession();
+
   return (
     <>
-      <ButtonReject
-        onClick={() => signOut({ callbackUrl: "/" })}
-        className="rounded-none px-8 py-1 w-fit border-white"
-      >
-        Log Out
-      </ButtonReject>
-
-      {/* Session Testing */}
-      <div className="text-white">
-        <h1>Staff Name: {session?.user?.name}</h1>
+      <div className="flex w-full items-center justify-center">
+        <h1 className="text-white text-2xl mt-2">
+          User: {session?.user?.name}
+        </h1>
       </div>
-
-      <h1 className="text-white">Staff Panel</h1>
+      <div className="flex gap-12 w-full h-full items-center justify-center mt-8 flex-wrap mb-12">
+        <StaffDisplayTables />
+      </div>
     </>
   );
 }
