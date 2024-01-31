@@ -19,9 +19,17 @@ const getProducts = async () => {
   }
 };
 
-export default function StaffOrderBySearch() {
+export default function StaffOrderBySearch(props: any) {
   const [productData, setProductData] = useState<any[]>([]);
   const [searchbar, SetSearchbar] = useState("");
+  const [payload, SetPayload] = useState({
+    productName: "",
+    productAmmount: 0,
+    size: "",
+    Toppings: [String],
+    Price: 0,
+  });
+
   useEffect(() => {
     const fetchTables = async () => {
       const data = await getProducts();
@@ -36,25 +44,39 @@ export default function StaffOrderBySearch() {
     fetchTables();
   }, [searchbar]);
 
-  console.log(searchbar);
+  useEffect(() => {
+    // Use the useEffect hook to trigger the callback when payload changes
+    props.onClick(payload);
+    console.log(payload);
+  }, [payload]);
 
   return (
-    <div className="flex flex-col border-2 rounded-xl border-white p-2 w-96 h-72 bg-[#ffffffc5]">
+    <div className="flex flex-col border-2 rounded-xl border-white p-2 w-96 h-72 bg-[#141414]">
       <form>
         <input
           type="text"
           placeholder="Search"
-          className="px-2 py-1 border-2 mb-4"
+          className="px-2 py-1 border-2 mb-4 bg-[#141414] rounded-md border-white placeholder:text-white"
           onChange={(e) => SetSearchbar(e.target.value)}
         ></input>
       </form>
 
       {/* List Products With Reggix */}
-      <div className="flex w-full flex-col gap-2 max-h-56 overflow-y-scroll border-2 p-2 border-white rounded-md">
+      <div className="flex w-full flex-col gap-2 max-h-56 overflow-y-scroll border-2 p-2 border-white rounded-md ">
         {productData.map((t: any) => (
           <ButtonAction
             key={t._id}
             className="w-full text-left shadow-none text-base px-2 py-2"
+            onClick={() => {
+              SetPayload((prevPayload) => ({
+                ...prevPayload,
+                productName: t.name,
+                productAmmount: 1,
+                size: "",
+                Toppings: t.toppings,
+                Price: t.price,
+              }));
+            }}
           >
             {t.name}
           </ButtonAction>
