@@ -46,9 +46,11 @@ export default function StaffOrderBySearch(props: any) {
 
   useEffect(() => {
     // Use the useEffect hook to trigger the callback when payload changes
-    props.onClick(payload);
-    console.log(payload);
-  }, [payload]);
+    if (payload && Object.keys(payload).length > 0) {
+      props.onClick(payload);
+      console.log("Payload:" + JSON.stringify(payload));
+    }
+  }, [payload, props]);
 
   return (
     <div className="flex flex-col border-2 rounded-xl border-white p-2 w-96 h-72 bg-[#141414]">
@@ -68,14 +70,15 @@ export default function StaffOrderBySearch(props: any) {
             key={t._id}
             className="w-full text-left shadow-none text-base px-2 py-2"
             onClick={() => {
-              SetPayload((prevPayload) => ({
-                ...prevPayload,
+              SetPayload({
                 productName: t.name,
                 productAmmount: 1,
                 size: "",
                 Toppings: t.toppings,
                 Price: t.price,
-              }));
+              });
+
+              console.log("Cat:" + payload);
             }}
           >
             {t.name}

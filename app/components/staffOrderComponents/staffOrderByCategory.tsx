@@ -43,7 +43,16 @@ export default function StaffOrderByCategory(props: any) {
     productName: "",
     productAmmount: 0,
     size: "",
-    Toppings: [String],
+    Toppings: [
+      "topping",
+      "topping",
+      "topping",
+      "topping",
+      "topping",
+      "topping",
+      "topping",
+      "topping",
+    ],
     Price: 0,
   });
 
@@ -80,7 +89,10 @@ export default function StaffOrderByCategory(props: any) {
 
   useEffect(() => {
     // Use the useEffect hook to trigger the callback when payload changes
-    props.onClick(payload);
+    if (payload && Object.keys(payload).length > 0) {
+      props.onClick(payload);
+      console.log("Payload:" + JSON.stringify(payload));
+    }
   }, [payload, props]);
 
   return (
@@ -123,7 +135,7 @@ export default function StaffOrderByCategory(props: any) {
                     Toppings: t.toppings,
                     Price: t.price,
                   });
-                  props.onClick(payload);
+
                   console.log("Cat:" + payload);
                 }}
               >

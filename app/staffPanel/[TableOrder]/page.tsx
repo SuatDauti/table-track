@@ -18,15 +18,38 @@ export default function TableOrder() {
     Price: 0,
   });
 
-  const CategoryData = (data: any) => {
-    SetSelectedProduct(data);
+  const [selectedProductFromSearch, SetSelectedProductFromSearch] = useState({
+    productName: "",
+    productAmmount: 0,
+    size: "",
+    Toppings: [],
+    Price: 0,
+  });
+
+  const [selectedProductFromCategory, SetSelectedProductFromCategory] =
+    useState({
+      productName: "",
+      productAmmount: 0,
+      size: "",
+      Toppings: [],
+      Price: 0,
+    });
+
+  const CategoryDataFromCategory = (data: any) => {
+    SetSelectedProductFromCategory(data);
+  };
+  const CategoryDataFromSearch = (data: any) => {
+    SetSelectedProductFromSearch(data);
   };
 
-  // useEffect(() => {
-  //   // Pass the updated data to child components
-  //   // You can replace the console.log with any logic to handle the data
-  //   console.log("Updated data:", selectedProduct);
-  // }, [selectedProduct]);
+  useEffect(() => {
+    SetSelectedProduct(selectedProductFromSearch);
+  }, [selectedProductFromSearch]);
+
+  useEffect(() => {
+    SetSelectedProduct(selectedProductFromCategory);
+  }, [selectedProductFromCategory]);
+
   return (
     <>
       <div className="flex w-screen h-full items-center justify-center mt-14 flex-col">
@@ -35,7 +58,7 @@ export default function TableOrder() {
         </Link>
         <div className="flex justify-around w-full h-full">
           {/* Find Product By Search */}
-          <StaffOrderBySearch onClick={CategoryData} />
+          <StaffOrderBySearch onClick={CategoryDataFromSearch} />
           {/* Main Form / Add 1*/}
           <div className="flex flex-col items-center  w-96 h-72 bg-[#141414] border-2 rounded-xl border-white">
             <h1 className="text-white">{selectedProduct.productName}</h1>
@@ -53,11 +76,11 @@ export default function TableOrder() {
 
               {/* Toppings */}
               <div className="text-white grid grid-cols-4 gap-4 w-full">
-                {selectedProduct.Toppings.map((t: any) => (
-                  <div className="flex">
+                {selectedProduct.Toppings.map((t: any, index: number) => (
+                  <div className="flex" key={index}>
                     <input
                       type="checkbox"
-                      // value={t}
+                      value={t}
                       // id={t}
                       className=""
                       defaultChecked
@@ -104,7 +127,7 @@ export default function TableOrder() {
         </div>
 
         {/* Search By Category */}
-        <StaffOrderByCategory onClick={CategoryData} />
+        <StaffOrderByCategory onClick={CategoryDataFromCategory} />
       </div>
     </>
   );
