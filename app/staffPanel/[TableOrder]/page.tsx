@@ -52,82 +52,83 @@ export default function TableOrder() {
 
   return (
     <>
-      <div className="flex w-screen h-full items-center justify-center mt-14 flex-col">
-        <Link href="/staffPanel" className=" absolute top-0 left-0" passHref>
-          <ButtonAction>Back</ButtonAction>
-        </Link>
-        <div className="flex justify-around w-full h-full">
-          {/* Find Product By Search */}
-          <StaffOrderBySearch onClick={CategoryDataFromSearch} />
-          {/* Main Form / Add 1*/}
-          <div className="flex flex-col items-center  w-96 h-72 bg-[#141414] border-2 rounded-xl border-white">
-            <h1 className="text-white">{selectedProduct.productName}</h1>
-            <form className="flex flex-col justify-around w-full h-full">
-              {/* Add Ammount */}
-              <div className="flex w-full justify-around">
-                <input
-                  type="number"
-                  className="[&::-webkit-inner-spin-button]:appearance-none w-12 text-center py-2"
-                  defaultValue={selectedProduct.productAmmount}
-                ></input>
-                <ButtonAccept>ADD</ButtonAccept>
-                <ButtonReject>CLE</ButtonReject>
-              </div>
+      <Link href="/staffPanel" className=" absolute top-0 left-0" passHref>
+        <ButtonAction>Back</ButtonAction>
+      </Link>
+      <div className="flex w-full h-full items-center justify-center mt-14 ">
+        <div className="flex flex-col w-full h-full">
+          <div className="flex justify-around w-full h-full">
+            {/* Find Product By Search */}
+            <StaffOrderBySearch onClick={CategoryDataFromSearch} />
+            {/* Main Form / Add 1*/}
+            <div className="flex flex-col items-center  w-96 h-72 bg-[#141414] border-2 rounded-xl border-white">
+              <h1 className="text-white">{selectedProduct.productName}</h1>
+              <form className="flex flex-col justify-around w-full h-full">
+                {/* Add Ammount */}
+                <div className="flex w-full justify-around">
+                  <input
+                    type="number"
+                    className="[&::-webkit-inner-spin-button]:appearance-none w-12 text-center py-2"
+                    defaultValue={selectedProduct.productAmmount}
+                  ></input>
+                  <ButtonAccept>ADD</ButtonAccept>
+                  <ButtonReject>CLE</ButtonReject>
+                </div>
 
-              {/* Toppings */}
-              <div className="text-white grid grid-cols-4 gap-4 w-full">
-                {selectedProduct.Toppings.map((t: any, index: number) => (
-                  <div className="flex" key={index}>
-                    <input
-                      type="checkbox"
-                      value={t}
-                      // id={t}
-                      className=""
-                      defaultChecked
-                    />
-                    <p>{t}</p>
-                  </div>
-                ))}
-              </div>
+                {/* Toppings */}
+                <div className="text-white grid grid-cols-4 gap-4 w-full">
+                  {selectedProduct.Toppings.map((t: any, index: number) => (
+                    <div className="flex" key={index}>
+                      <input
+                        type="checkbox"
+                        value={t}
+                        // id={t}
+                        className=""
+                        defaultChecked
+                      />
+                      <p>{t}</p>
+                    </div>
+                  ))}
+                </div>
 
-              {/* Size */}
-              <div>
-                <fieldset className="text-white text-center">
-                  <legend>Size</legend>
-                  <div className="flex justify-around">
-                    <div>
-                      <input type="radio" id="S" name="contact" value="S" />
-                      <label htmlFor="S">S</label>
-                    </div>
-                    <div>
-                      <input type="radio" id="M" name="contact" value="M" />
-                      <label htmlFor="M">M</label>
-                    </div>
+                {/* Size */}
+                <div>
+                  <fieldset className="text-white text-center">
+                    <legend>Size</legend>
+                    <div className="flex justify-around">
+                      <div>
+                        <input type="radio" id="S" name="contact" value="S" />
+                        <label htmlFor="S">S</label>
+                      </div>
+                      <div>
+                        <input type="radio" id="M" name="contact" value="M" />
+                        <label htmlFor="M">M</label>
+                      </div>
 
-                    <div>
-                      <input type="radio" id="L" name="contact" value="L" />
-                      <label htmlFor="L">L</label>
-                    </div>
+                      <div>
+                        <input type="radio" id="L" name="contact" value="L" />
+                        <label htmlFor="L">L</label>
+                      </div>
 
-                    <div>
-                      <input type="radio" id="XL" name="contact" value="XL" />
-                      <label htmlFor="XL">XL</label>
+                      <div>
+                        <input type="radio" id="XL" name="contact" value="XL" />
+                        <label htmlFor="XL">XL</label>
+                      </div>
                     </div>
-                  </div>
-                </fieldset>
-              </div>
-              <h1 className="text-white text-center">
-                Price: {selectedProduct.Price} $
-              </h1>
-            </form>
+                  </fieldset>
+                </div>
+                <h1 className="text-white text-center">
+                  Price: {selectedProduct.Price} $
+                </h1>
+              </form>
+            </div>
           </div>
 
-          {/* Main Tab */}
-          <StaffCompleteForm />
+          {/* Search By Category */}
+          <StaffOrderByCategory onClick={CategoryDataFromCategory} />
         </div>
-
-        {/* Search By Category */}
-        <StaffOrderByCategory onClick={CategoryDataFromCategory} />
+        {/* Main Tab */}
+        <StaffCompleteForm />
       </div>
     </>
   );

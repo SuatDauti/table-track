@@ -97,14 +97,14 @@ export default function StaffOrderByCategory(props: any) {
 
   return (
     <>
-      <h1 className="text-white text-xl -mb-4">
+      <h1 className="text-white text-xl -mb-4 text-center">
         {category == "" ? <p>All Categories</p> : category}
       </h1>
-      <div className="flex flex-col w-full gap-4">
+      <div className="flex flex-col w-full gap-4 max-w-6xl">
         {/* List Categories */}
-        <div className=" flex gap-8 mt-8 w-full justify-arround bg-[#141414] py-4 border-white border-y-2">
+        <div className=" mt-8 w-full bg-[#141414] py-4 border-white border-2 max-h-24 rounded-lg overflow-y-scroll">
           <ButtonAction
-            className="min-w-[150px]"
+            className="min-w-[150px] m-2"
             onClick={(e) => SetCategory("")}
           >
             All Products
@@ -112,7 +112,7 @@ export default function StaffOrderByCategory(props: any) {
           {allCategories.map((t: any) => (
             <ButtonAction
               key={t._id}
-              className="min-w-[150px]"
+              className="min-w-[150px] m-2"
               onClick={(e) => SetCategory(t.category)}
             >
               {t.category}
@@ -122,11 +122,11 @@ export default function StaffOrderByCategory(props: any) {
 
         {/* List products */}
         <div className="flex w-full justify-start items-start">
-          <div className=" flex gap-4 row-gap-4 justify-start bg-[#141414] w-full h-56 flex-wrap overflow-y-scroll p-4 rounded-xl border-white border-2 overflow-x-clip items-start align-content-start">
+          <div className=" gap-4 row-gap-4 justify-start bg-[#141414] w-full h-56 flex-wrap overflow-y-scroll p-4 rounded-xl border-white border-2 overflow-x-clip items-start align-content-start">
             {products.map((t: any) => (
               <ButtonAction
                 key={t._id}
-                className=" min-w-[150px] h-fit"
+                className=" min-w-[150px] h-fit mx-1 my-2"
                 onClick={() => {
                   SetPayload({
                     productName: t.name,
