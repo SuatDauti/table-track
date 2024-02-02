@@ -42,8 +42,9 @@ export default function StaffOrderByCategory(props: any) {
   const [payload, SetPayload] = useState({
     productName: "",
     productAmmount: 0,
+    productPrice: 0,
     size: "",
-    Toppings: [
+    toppings: [
       "topping",
       "topping",
       "topping",
@@ -53,14 +54,12 @@ export default function StaffOrderByCategory(props: any) {
       "topping",
       "topping",
     ],
-    Price: 0,
   });
 
   useEffect(() => {
     const fetchCategories = async () => {
       const data = await getCategories();
       SetAllCategories(data.category);
-      console.log(data);
     };
     fetchCategories();
   }, []);
@@ -80,7 +79,6 @@ export default function StaffOrderByCategory(props: any) {
         );
       }
 
-      // console.log("Fetched data:", filteredData);
       SetProducts(filteredData);
     };
 
@@ -91,7 +89,6 @@ export default function StaffOrderByCategory(props: any) {
     // Use the useEffect hook to trigger the callback when payload changes
     if (payload && Object.keys(payload).length > 0) {
       props.onClick(payload);
-      console.log("Payload:" + JSON.stringify(payload));
     }
   }, [payload, props]);
 
@@ -131,12 +128,10 @@ export default function StaffOrderByCategory(props: any) {
                   SetPayload({
                     productName: t.name,
                     productAmmount: 1,
+                    productPrice: t.price,
                     size: "",
-                    Toppings: t.toppings,
-                    Price: t.price,
+                    toppings: t.toppings,
                   });
-
-                  console.log("Cat:" + payload);
                 }}
               >
                 {t.name}

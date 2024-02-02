@@ -8,10 +8,14 @@ const tableSchema = new Schema(
     tableNO: {
       type: Number,
     },
+    tableTotal: {
+      type: Number,
+    },
     tableContent: [
       {
         productName: String,
         productAmmount: Number,
+        productPrice: Number,
         size: String,
         toppings: [String],
       },

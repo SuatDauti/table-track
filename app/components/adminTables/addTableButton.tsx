@@ -12,15 +12,6 @@ export default function AddTableButton() {
 
   const router = useRouter();
 
-  const arrayTest = [
-    {
-      productName: "",
-      productAmmount: 0,
-      size: "S",
-      toppings: [""],
-    },
-  ];
-
   useEffect(() => {
     fetch("/api/addTable")
       .then((res) => res.json())
@@ -42,7 +33,7 @@ export default function AddTableButton() {
         body: JSON.stringify({
           usedBy: "",
           tableNO: 0,
-          tableContent: arrayTest,
+          tableTotal: 0,
         }),
       });
 

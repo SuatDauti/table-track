@@ -6,33 +6,60 @@ import StaffOrderBySearch from "@/app/components/staffOrderComponents/staffOrder
 import ButtonAccept from "@/app/components_global/buttons/ButtonAccept";
 import ButtonAction from "@/app/components_global/buttons/ButtonAction";
 import ButtonReject from "@/app/components_global/buttons/ButtonReject";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { PUT } from "@/app/api/updateTable/[id]/route";
 
 export default function TableOrder() {
-  const [selectedProduct, SetSelectedProduct] = useState({
+  const [RefreshValue, SetRefreshValue] = useState(0);
+  const { data: session } = useSession();
+  const pathname = usePathname().split("/").pop();
+  const [checkedToppings, setCheckedToppings] = useState<string[]>([]);
+
+  const [selectedProduct, SetSelectedProduct] = useState<{
+    productName: string;
+    productAmount: number;
+    productPrice: number;
+    size: string;
+    toppings: string[];
+  }>({
     productName: "",
-    productAmmount: 0,
+    productAmount: 0,
+    productPrice: 0,
     size: "",
-    Toppings: [],
-    Price: 0,
+    toppings: [],
   });
 
-  const [selectedProductFromSearch, SetSelectedProductFromSearch] = useState({
+  const [selectedProductFromSearch, SetSelectedProductFromSearch] = useState<{
+    productName: string;
+    productAmount: number;
+    productPrice: number;
+    size: string;
+    toppings: string[];
+  }>({
     productName: "",
-    productAmmount: 0,
+    productAmount: 0,
+    productPrice: 0,
     size: "",
-    Toppings: [],
-    Price: 0,
+    toppings: [],
   });
 
   const [selectedProductFromCategory, SetSelectedProductFromCategory] =
-    useState({
+    useState<{
+      productName: string;
+      productAmount: number;
+      productPrice: number;
+      size: string;
+      toppings: string[];
+    }>({
       productName: "",
-      productAmmount: 0,
+      productAmount: 0,
+      productPrice: 0,
       size: "",
-      Toppings: [],
-      Price: 0,
+      toppings: [],
     });
 
   const CategoryDataFromCategory = (data: any) => {
@@ -50,6 +77,62 @@ export default function TableOrder() {
     SetSelectedProduct(selectedProductFromCategory);
   }, [selectedProductFromCategory]);
 
+  const handleAmmountChange = (e: any) => {
+    const ammount = parseInt(e.target.value);
+    SetSelectedProduct((prevProduct) => ({
+      ...prevProduct,
+      productAmmount: ammount,
+    }));
+  };
+
+  const handleSizeChange = (e: any) => {
+    const size = e.target.value;
+    SetSelectedProduct((prevProduct) => ({
+      ...prevProduct,
+      size: size,
+    }));
+  };
+
+  const handleToppingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      setCheckedToppings((prevToppings) => [...prevToppings, value]);
+    } else {
+      setCheckedToppings((prevToppings) =>
+        prevToppings.filter((topping) => topping !== value)
+      );
+    }
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const id = pathname;
+    const nameOfUser = session?.user?.name;
+
+    const updatedProduct = {
+      ...selectedProduct,
+      toppings: checkedToppings,
+    };
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/updateTable/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ selectedProduct: updatedProduct, nameOfUser }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to update topic");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    SetRefreshValue(RefreshValue + 1);
+  };
   return (
     <>
       <Link href="/staffPanel" className=" absolute top-0 left-0" passHref>
@@ -69,22 +152,23 @@ export default function TableOrder() {
                   <input
                     type="number"
                     className="[&::-webkit-inner-spin-button]:appearance-none w-12 text-center py-2"
-                    defaultValue={selectedProduct.productAmmount}
+                    defaultValue={selectedProduct.productAmount}
+                    onChange={handleAmmountChange}
                   ></input>
-                  <ButtonAccept>ADD</ButtonAccept>
+                  <ButtonAccept onClick={handleSubmit}>ADD</ButtonAccept>
                   <ButtonReject>CLE</ButtonReject>
                 </div>
 
                 {/* Toppings */}
                 <div className="text-white grid grid-cols-4 gap-4 w-full">
-                  {selectedProduct.Toppings.map((t: any, index: number) => (
+                  {selectedProduct.toppings.map((t: any, index: number) => (
                     <div className="flex" key={index}>
                       <input
                         type="checkbox"
                         value={t}
-                        // id={t}
                         className=""
-                        defaultChecked
+                        checked={checkedToppings.includes(t)}
+                        onChange={handleToppingChange}
                       />
                       <p>{t}</p>
                     </div>
@@ -97,28 +181,52 @@ export default function TableOrder() {
                     <legend>Size</legend>
                     <div className="flex justify-around">
                       <div>
-                        <input type="radio" id="S" name="contact" value="S" />
+                        <input
+                          type="radio"
+                          id="S"
+                          name="size"
+                          value="S"
+                          onChange={handleSizeChange}
+                        />
                         <label htmlFor="S">S</label>
                       </div>
                       <div>
-                        <input type="radio" id="M" name="contact" value="M" />
+                        <input
+                          type="radio"
+                          id="M"
+                          name="size"
+                          value="M"
+                          onChange={handleSizeChange}
+                        />
                         <label htmlFor="M">M</label>
                       </div>
 
                       <div>
-                        <input type="radio" id="L" name="contact" value="L" />
+                        <input
+                          type="radio"
+                          id="L"
+                          name="size"
+                          value="L"
+                          onChange={handleSizeChange}
+                        />
                         <label htmlFor="L">L</label>
                       </div>
 
                       <div>
-                        <input type="radio" id="XL" name="contact" value="XL" />
+                        <input
+                          type="radio"
+                          id="XL"
+                          name="size"
+                          value="XL"
+                          onChange={handleSizeChange}
+                        />
                         <label htmlFor="XL">XL</label>
                       </div>
                     </div>
                   </fieldset>
                 </div>
                 <h1 className="text-white text-center">
-                  Price: {selectedProduct.Price} $
+                  Price: {selectedProduct.productPrice} $
                 </h1>
               </form>
             </div>
@@ -128,7 +236,7 @@ export default function TableOrder() {
           <StaffOrderByCategory onClick={CategoryDataFromCategory} />
         </div>
         {/* Main Tab */}
-        <StaffCompleteForm />
+        <StaffCompleteForm parentValue={RefreshValue} />
       </div>
     </>
   );

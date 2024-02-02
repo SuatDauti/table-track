@@ -25,9 +25,9 @@ export default function StaffOrderBySearch(props: any) {
   const [payload, SetPayload] = useState({
     productName: "",
     productAmmount: 0,
+    productPrice: 0,
     size: "",
-    Toppings: [String],
-    Price: 0,
+    toppings: [String],
   });
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function StaffOrderBySearch(props: any) {
       const filteredData = data.product.filter((product: any) =>
         regex.test(product.name)
       );
-      console.log("Fetched data:", filteredData);
+
       setProductData(filteredData);
     };
 
@@ -48,7 +48,6 @@ export default function StaffOrderBySearch(props: any) {
     // Use the useEffect hook to trigger the callback when payload changes
     if (payload && Object.keys(payload).length > 0) {
       props.onClick(payload);
-      console.log("Payload:" + JSON.stringify(payload));
     }
   }, [payload, props]);
 
@@ -73,12 +72,10 @@ export default function StaffOrderBySearch(props: any) {
               SetPayload({
                 productName: t.name,
                 productAmmount: 1,
+                productPrice: t.price,
                 size: "",
-                Toppings: t.toppings,
-                Price: t.price,
+                toppings: t.toppings,
               });
-
-              console.log("Cat:" + payload);
             }}
           >
             {t.name}

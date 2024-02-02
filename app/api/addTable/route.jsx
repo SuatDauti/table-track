@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { connectMongoDB } from "../../../lib/mongodb";
+import { connectMongoDB } from "@/lib/mongodb";
 import Table from "../../../models/table";
 
 export async function POST(req) {
@@ -40,4 +40,60 @@ export async function DELETE() {
   await Table.findByIdAndDelete(lastEntry._id);
 
   return NextResponse.json({ message: "Topic deleted" }, { status: 200 });
+}
+
+export async function PUT(req) {
+  try {
+    const { id } = req.query; // Extract the table ID from the request query parameters
+    const updatedTableData = await req.json(); // Data to update the table
+
+    // Check if the ID is provided
+    if (!id) {
+      return NextResponse.json(
+        { message: "Table ID is required in the request parameters." },
+        { status: 400 }
+      );
+    }
+
+    // Connect to MongoDB
+    await connectMongoDB();
+
+    // Find the table by ID
+    const existingTable = await Table.findById(id);
+
+    // Check if the table exists
+    if (!existingTable) {
+      return NextResponse.json(
+        { message: "Table not found." },
+        { status: 404 }
+      );
+    }
+
+    // Update the table data
+    existingTable.usedBy = updatedTableData.usedBy;
+    existingTable.tableContent = updatedTableData.tableContent;
+    existingTable.tableTotal = calculateTableTotal(
+      updatedTableData.tableContent
+    );
+
+    // Save the updated table
+    await existingTable.save();
+
+    return NextResponse.json({ message: "Table updated" }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        message: "An error occurred while updating the table." + error.message,
+      },
+      { status: 500 }
+    );
+  }
+}
+
+// Helper function to calculate the tableTotal based on tableContent
+function calculateTableTotal(tableContent) {
+  return tableContent.reduce((total, product) => {
+    return total + product.productAmmount * product.productPrice;
+  }, 0);
 }

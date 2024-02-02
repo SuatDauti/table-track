@@ -26,7 +26,7 @@ export default function StaffDisplayTables() {
   useEffect(() => {
     const fetchTables = async () => {
       const data = await getTables();
-      console.log("Fetched data:", data);
+
       setTableData(data.table);
     };
 
@@ -46,7 +46,7 @@ export default function StaffDisplayTables() {
 
             <Link href={`/staffPanel/${t._id}`} passHref>
               <ButtonAction className="w-full rounded-t-none border-none min-w-[250px]">
-                Total: 300$
+                Total: {t.tableTotal}$
               </ButtonAction>
             </Link>
           </div>
