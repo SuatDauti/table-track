@@ -165,7 +165,7 @@ export default function TableOrder() {
                     <div className="flex" key={index}>
                       <input
                         type="checkbox"
-                        value={t}
+                        defaultValue={t}
                         className=""
                         checked={checkedToppings.includes(t)}
                         onChange={handleToppingChange}

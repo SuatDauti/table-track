@@ -1,6 +1,8 @@
 import ButtonAccept from "@/app/components_global/buttons/ButtonAccept";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import ButtonReject from "@/app/components_global/buttons/ButtonReject";
+import ButtonNeutral from "@/app/components_global/buttons/ButtonNeutral";
 
 const getTable = async () => {
   try {
@@ -23,6 +25,7 @@ export default function StaffCompleteForm({ parentValue }: any) {
   const [tableValue, SetTableValue] = useState(0);
   const [tableData, setTableData] = useState<any[]>([]);
   const pathname = usePathname().split("/").pop();
+  const [clearedTab, SetClearedTab] = useState([]);
 
   const fetchTables = async () => {
     const id = pathname;
@@ -42,6 +45,29 @@ export default function StaffCompleteForm({ parentValue }: any) {
   useEffect(() => {
     fetchTables();
   }, [parentValue]);
+
+  const clearTab = async (e: any) => {
+    e.preventDefault();
+
+    const id = pathname;
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/clearTab/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(clearedTab),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to update topic");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    location.reload();
+  };
 
   return (
     <>
@@ -73,7 +99,13 @@ export default function StaffCompleteForm({ parentValue }: any) {
             <p>{tableValue} $</p>
           </div>
         </div>
-        <ButtonAccept>Save</ButtonAccept>
+        <div className="grid grid-cols-3 ">
+          <ButtonAccept className="w-full h-fit">Order</ButtonAccept>
+          <ButtonNeutral className="w-full h-fit">Pay</ButtonNeutral>
+          <ButtonReject className="w-full h-fit" onClick={clearTab}>
+            Clear
+          </ButtonReject>
+        </div>
       </div>
     </>
   );

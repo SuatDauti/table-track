@@ -60,12 +60,12 @@ export default function AddTableButton() {
         Add 1 Table
       </ButtonAccept>
 
-      <p className="text-white text-2xl w-fit">
+      <p className="text-white text-2xl w-fit flex">
         You Have
         {loading ? (
-          <ImSpinner5 className=" text-2xl animate-spin" />
+          <ImSpinner5 className=" text-2xl animate-spin mx-2" />
         ) : (
-          <span> {count} </span>
+          <span className="mx-2"> {count} </span>
         )}
         tables registered
       </p>

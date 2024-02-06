@@ -39,10 +39,17 @@ export default function StaffDisplayTables() {
       {tableData &&
         tableData.map((t: any) => (
           <div key={t._id}>
-            <div className="bg-white flex min-w-[100px] min-h-[100px] items-center flex-col justify-center rounded-t-md ">
-              <p>Used By: {t.usedBy}</p>
-              <p>Table {t.tableNO}</p>
-            </div>
+            {t.usedBy != "" ? (
+              <div className="bg-greenProd flex min-w-[100px] min-h-[100px] items-center flex-col justify-center rounded-t-md ">
+                <p>Used By: {t.usedBy}</p>
+                <p>Table {t.tableNO}</p>
+              </div>
+            ) : (
+              <div className="bg-white flex min-w-[100px] min-h-[100px] items-center flex-col justify-center rounded-t-md ">
+                <p>Used By: {t.usedBy}</p>
+                <p>Table {t.tableNO}</p>
+              </div>
+            )}
 
             <Link href={`/staffPanel/${t._id}`} passHref>
               <ButtonAction className="w-full rounded-t-none border-none min-w-[250px]">
