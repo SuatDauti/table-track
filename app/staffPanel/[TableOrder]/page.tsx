@@ -151,6 +151,7 @@ export default function TableOrder() {
                 <div className="flex w-full justify-around">
                   <input
                     type="number"
+                    placeholder="1"
                     className="[&::-webkit-inner-spin-button]:appearance-none w-12 text-center py-2"
                     defaultValue={selectedProduct.productAmount}
                     onChange={handleAmmountChange}
