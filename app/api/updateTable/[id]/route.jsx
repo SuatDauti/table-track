@@ -10,7 +10,21 @@ export async function PUT(request, { params }) {
   await connectMongoDB();
 
   const table = await Table.findById(id);
-  table.tableContent.push(tableContent);
+
+  // Find the product in the existing table content
+  const existingProductIndex = table.tableContent.findIndex(
+    (product) => product.productName === tableContent.productName
+  );
+
+  // If the product exists, update the productAmmount
+  if (existingProductIndex !== -1) {
+    table.tableContent[existingProductIndex].productAmmount +=
+      tableContent.productAmmount;
+  } else {
+    // If the product doesn't exist, add it to the table content
+    table.tableContent.push(tableContent);
+  }
+
   table.usedBy = usedBy;
 
   const tableTotal = table.tableContent.reduce(
@@ -18,6 +32,8 @@ export async function PUT(request, { params }) {
     0
   );
   table.tableTotal = tableTotal;
+  // Mark the tableContent as modified
+  table.markModified("tableContent");
 
   await table.save();
 
